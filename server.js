@@ -20,189 +20,6 @@ app.get('/', (req, res) => {
 const fs = require('fs');
 const path = require('path');
 
-// app.post('/scrape', async (req, res) => {
-//     const url = req.body.url;
-//     console.log(`Received URL: ${url}`);
-
-//     try {
-//         const response = await axios.get(url, {
-//             headers: {
-//                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-//                 'Accept-Language': 'en-US,en;q=0.9',
-//                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-//                 'Connection': 'keep-alive'
-//             }
-//         });
-
-//         const html = response.data;
-//         const $ = cheerio.load(html);
-
-//         // Save the full HTML for debugging
-//         const filePath = path.join(__dirname, 'scraped_page.html');
-//         fs.writeFileSync(filePath, html, 'utf-8');
-//         console.log(`Full HTML saved to: ${filePath}`);
-
-//         // Try extracting product image and other info from JSON-LD
-//         const jsonLdRaw = $('script[type="application/ld+json"]').html();
-//         const jsonLd = JSON.parse(jsonLdRaw);
-
-//         // Extract packet size from Highlights section
-//         let packetSize = '';
-//         $('.sc-gEvEer.TpdeP').each(function () {
-//             if ($(this).text().trim() === 'Pack Size') {
-//                 packetSize = $(this).parent().next().find('.sc-gEvEer').text().trim();
-//             }
-//         });
-
-//         const product = {
-//             title: $('[data-testid="item-name"]').text().trim() || jsonLd.name || '',
-//             price: $('[data-testid="item-price"]').text().trim() || (jsonLd.offers?.price?.toString() ?? ''),
-//             strikedPrice: $('[data-testid="item-striked-price"]').text().trim(),
-//             packetSize: packetSize || 'N/A',
-//             imageUrl: Array.isArray(jsonLd.image) ? jsonLd.image[0] : jsonLd.image || ''
-//         };
-
-//         console.log(`Scraped product: ${JSON.stringify(product)}`);
-//         res.json({ product });
-//     } catch (error) {
-//         console.error('Error occurred while fetching product data:', error);
-//         res.status(500).json({ error: 'An error occurred while fetching the product data.' });
-//     }
-// });
-
-
-// app.post('/scrape', async (req, res) => {
-//     const url = req.body.url;
-//     console.log(`Received URL: ${url}`);
-
-//     try {
-//         const response = await axios.get(url, {
-//             headers: {
-//                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-//                 'Accept-Language': 'en-US,en;q=0.9',
-//                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-//                 'Connection': 'keep-alive'
-//             }
-//         });
-
-//         const html = response.data;
-//         const $ = cheerio.load(html);
-//     ]
-//         $('img').each(function() {
-//             console.log('Image data-src or src:', $(this).attr('data-src') || $(this).attr('src'));
-//         });
-        
-//         const product = {
-//             title: $('[data-testid="item-name"]').text().trim(),
-//             price: $('[data-testid="item-price"]').text().trim(),
-//             strikedPrice: $('[data-testid="item-striked-price"]').text().trim(),
-//             packetSize: $('[class*="kYaBqd"], [data-testid="item-size"]').text().trim(),  // fallback
-//             imageUrl: $('img[alt*="' + $('[data-testid="item-name"]').text().trim() + '"]').attr('src') ||  // dynamically use title for alt
-//                       $('div[data-testid="image-card-div"] img').attr('src') || 
-//                       $('img.sc-gEvEer').attr('src') || 
-//                       $('img').first().attr('src') || ''
-//         };
-        
-//         console.log(`Scraped product: ${JSON.stringify(product)}`);
-//         res.json({ product });
-//     } catch (error) {
-//         console.error('Error occurred while fetching product data:', error);
-//         res.status(500).json({ error: 'An error occurred while fetching the product data.' });
-//     }
-// });
-
-
-// const fs = require('fs');
-// const path = require('path');
-
-// app.post('/scrape', async (req, res) => {
-//     const url = req.body.url;
-//     console.log(`Received URL: ${url}`);
-
-//     try {
-//         const response = await axios.get(url, {
-//             headers: {
-//                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-//                 'Accept-Language': 'en-US,en;q=0.9',
-//                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-//                 'Connection': 'keep-alive'
-//             }
-//         });
-
-//         const html = response.data;
-//         const $ = cheerio.load(html);
-
-//         // Save HTML
-//         const filePath = path.join(__dirname, 'scraped_page1.html');
-//         fs.writeFileSync(filePath, html, 'utf-8');
-
-//         // Get JSON-LD
-//         const jsonLdRaw = $('script[type="application/ld+json"]').first().html();
-//         const jsonLd = JSON.parse(jsonLdRaw);
-
-//         // Extract highlights by section title
-//         const getHighlightValue = (label) => {
-//             let value = '';
-//             $('.sc-gEvEer.TpdeP').each(function () {
-//                 if ($(this).text().trim().toLowerCase() === label.toLowerCase()) {
-//                     value = $(this).parent().next().find('.sc-gEvEer').text().trim();
-//                 }
-//             });
-//             return value;
-//         };
-
-//         // Ingredients
-//         const ingredients = [];
-//         $('[data-testid="product-highlights-container"] li').each(function () {
-//             const text = $(this).text().trim();
-//             if (text && text.toLowerCase().includes('milk')) { // crude filter
-//                 ingredients.push(text);
-//             }
-//         });
-
-//         // Nutrition
-//         const nutrition = [];
-//         $('[data-testid="product-highlights-container"] li').each(function () {
-//             const text = $(this).text().trim();
-//             if (text && text.match(/(kcal|fat|protein|carb|sugar)/i)) {
-//                 nutrition.push(text);
-//             }
-//         });
-
-//         // Storage Instructions
-//         const storage = [];
-//         $('[data-testid="product-highlights-container"] li').each(function () {
-//             const text = $(this).text().trim();
-//             if (text.toLowerCase().includes('freezer') || text.toLowerCase().includes('store')) {
-//                 storage.push(text);
-//             }
-//         });
-
-//         const product = {
-//             title: $('[data-testid="item-name"]').text().trim() || jsonLd.name || '',
-//             price: $('[data-testid="item-price"]').text().trim() || (jsonLd.offers?.price?.toString() ?? ''),
-//             strikedPrice: $('[data-testid="item-striked-price"]').text().trim(),
-//             packetSize: getHighlightValue('Pack Size') || 'N/A',
-//             flavour: getHighlightValue('Flavour') || '',
-//             imageUrl: Array.isArray(jsonLd.image) ? jsonLd.image[0] : jsonLd.image || '',
-//             brand: jsonLd.brand?.name || '',
-//             description: $('meta[name="description"]').attr('content') || '',
-//             ingredients,
-//             nutrition,
-//             storageInstructions: storage
-//         };
-
-//         console.log('Final scraped product:\n', product);
-//         res.json({ product });
-
-//     } catch (error) {
-//         console.error('Scraping error:', error.stack || error.message);
-//         res.status(500).json({ error: 'Failed to scrape Myntra product data.' });
-//     }
-    
-// });
-
-
 
 
 app.post('/scrape', async (req, res) => {
@@ -279,6 +96,7 @@ app.post('/scrape', async (req, res) => {
 });
 
 
+
 app.post('/urls', async (req, res) => {
     const url = req.body.url;
     console.log(`Received URL: ${url}`);
@@ -323,7 +141,54 @@ app.post('/urls', async (req, res) => {
 });
 
 
+const BASE_URL = 'https://www.flipkart.com';
 
+app.post('/scrape-products', async (req, res) => {
+    const { url } = req.body;
+    if (!url) return res.status(400).json({ error: 'Flipkart listing URL is required.' });
+
+    try {
+        const html = (await axios.get(url, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0'
+            }
+        })).data;
+
+        const $ = cheerio.load(html);
+        const productLinks = [];
+
+        $('a').each((i, el) => {
+            const href = $(el).attr('href');
+            if (href && href.startsWith('/')) {
+                if (href.includes('/p/')) {
+                    const fullUrl = BASE_URL + href.split('?')[0]; // Clean URL
+                    if (!productLinks.includes(fullUrl)) {
+                        productLinks.push(fullUrl);
+                    }
+                }
+            }
+        });
+
+        const top5Links = productLinks.slice(0, 5);
+
+        const scrapedData = [];
+
+        for (const productUrl of top5Links) {
+            try {
+                const response = await axios.post('http://localhost:3000/scrape', { url: productUrl });
+                scrapedData.push(response.data.product);
+            } catch (err) {
+                scrapedData.push({ error: `Failed to scrape ${productUrl}` });
+            }
+        }
+
+        res.json({ count: scrapedData.length, products: scrapedData });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Something went wrong while scraping listing page.' });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
